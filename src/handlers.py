@@ -103,20 +103,24 @@ class GenerateThriftBindingHandler(BaseHandler):
 
 		self.finish()
 
+	def write_error(self, status_code, **kwargs):
+		if self.get_argument("ui", "0") == "1":
+			self.render("error.html", status_code=status_code, error_text=str(kwargs["exc_info"][1]))
+		else:
+			self.finish({ "result" : "fail", "text" : str(kwargs["exc_info"][1]) })
+
 	@tornado.web.asynchronous
-	def get(self):
-		url = self.get_argument("url", None)
-		if not url:
-			self.set_status(400)
-			self.finish(json.dumps({ "result" : 400, "text" : "'url' parameter is missing" }))
-
-		http_client = httpclient.AsyncHTTPClient()
-		http_client.fetch(url, self._handle_request)
-
 	def post(self):
 		gen = self.get_argument("gen")
 
 		first_filename = None
+
+		url = self.get_argument("url", None)
+
+		if url:
+			http_client = httpclient.AsyncHTTPClient()
+			http_client.fetch(url, self._handle_request)
+			return
 
 		path = os.path.join(settings.TEMP_PATH, self._generate_temp_id())
 		os.makedirs(path)
@@ -153,6 +157,8 @@ class GenerateThriftBindingHandler(BaseHandler):
 				self.write(f.read())
 			finally:
 				f.close()
+
+			self.finish()
 		finally:
 			logging.debug("Removing temp path '" + path + "'")
 			shutil.rmtree(path)

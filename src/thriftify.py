@@ -8,7 +8,6 @@ from tornado.options import define, options
 
 from handlers import *
 
-import uimodules
 import settings
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -23,7 +22,6 @@ class Application(tornado.web.Application):
 		_settings = dict(
 			template_path=os.path.join(os.path.dirname(__file__), "templates"),
 			static_path=os.path.join(os.path.dirname(__file__), "static"),
-			uimodules=uimodules,
 			debug=settings.DEBUG,
 			gzip=True
 		)
