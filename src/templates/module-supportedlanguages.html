@@ -1,0 +1,15 @@
+<select id="gen" name="gen">		
+	<option value="">Select a binding</option>
+	{% for s in sorted(supported_languages.iterkeys()) %}
+	{% if "parameters" in supported_languages[s] %}
+	<optgroup label="{{ supported_languages[s]['name'] }}">
+		<option value="{{ s }}">{{ supported_languages[s]['name'] }}</option>
+		{% for p in supported_languages[s]['parameters'] %}
+		<option value="{{ s }}:{{ p }}">{{ supported_languages[s]['name'] }}: {{ p }}</option>
+		{% end %}
+	</optgroup>
+	{% else %}
+	<option value="{{ s }}">{{ supported_languages[s]["name"] }}</option>
+	{% end %}
+	{% end %}								
+</select>

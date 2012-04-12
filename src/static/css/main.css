@@ -1,0 +1,23 @@
+body {
+	margin: 0px auto;
+	width: 500px;
+}
+
+#title {
+	text-align: center;
+}
+
+#content {
+	border: solid 1px #c0c0c0;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+#form-parameters {
+	margin: 0px auto;
+	width: 200px;
+}
+
+#submit-files-button-con {
+	margin-top: 10px;
+}

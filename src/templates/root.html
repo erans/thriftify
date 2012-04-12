@@ -1,0 +1,123 @@
+{% extends "b.html" %}
+
+{% block content %}
+<div class="row">
+	<div class="span12">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#1" data-toggle="tab">Paste a Thrift File</a></li>
+			<li><a href="#2" data-toggle="tab">Upload Thrift File(s)</a></li>
+			<li><a href="#3" data-toggle="tab">Upload Thrift file via URL</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="1">
+				<div class="span8">
+						<form id="submit-text-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+								<fieldset>
+									<legend>&nbsp;</legend>
+									<em>
+										<div class="clearfix">
+											<label>Binding Type</label>
+											<div class="input">
+												{% module Template("module-supportedlanguages.html", supported_languages=supported_languages) %}
+											</div>
+										</div>
+
+										<div class="clearfix">
+											<label>Thrift file content</label>
+											<div class="input">
+												<textarea style="width: 400px; height: 200px;" id="thriftcontent" name="thriftcontent"></textarea>
+											</div>
+										</div>
+
+										<div class="clearfix">
+											<button class="btn primary">Generate</button>
+										</div>
+									</em>				
+								</fieldset>
+							</form>
+					</div>				
+			</div>
+			<div class="tab-pane" id="2">
+				<div class="span8">
+					<div>
+						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+							<fieldset>
+								<legend>&nbsp;</legend>
+								<em>
+									<div class="clearfix">
+										<label>Binding Type</label>
+										<div class="input">
+											{% module Template("module-supportedlanguages.html", supported_languages=supported_languages) %}
+										</div>
+									</div>
+
+									<div class="clearfix">
+										<label>Files</label>
+										<div class="input">
+											<input type="file" name="f1" id="f1" class="input-file" />
+											<div>
+												<a id="add-more-link" href="#">Add more files</a> 
+											</div>
+										</div>
+									</div>
+
+									<div class="clearfix">
+										<button class="btn primary">Generate</button>
+									</div>
+								</em>				
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="3">
+				<div class="span8">
+					<div>
+						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+							<fieldset>
+								<legend>&nbsp;</legend>
+								<em>
+									<div class="clearfix">
+										<label>Binding Type</label>
+										<div class="input">
+											{% module Template("module-supportedlanguages.html", supported_languages=supported_languages) %}
+										</div>
+									</div>
+
+									<div class="clearfix">
+										<label>Thrift File URL</label>
+										<div class="input">
+											<input type="text" class="xlarge" placeholder="Enter the thrift file URL" name="url" id="url" />
+										</div>
+									</div>
+
+									<div class="clearfix">
+										<button class="btn primary">Generate</button>
+									</div>
+								</em>				
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% end %}
+
+{% block scriptinit %}
+
+$('a[data-toggle="tab"]').on('shown', function (e) {
+  //e.target // activated tab
+  //e.relatedTarget // previous tab
+  //alert("hello");
+})
+
+$("#add-more-link").click( function(e) {
+	e.preventDefault();
+	
+	var filesCount = $("input[type=file]").length;
+	var f = $("<input class='input-file' type='file' name='f" + (filesCount+1) + "' id='f" + (filesCount+1) + "'/>");
+	$("#f" + filesCount).after(f);
+});
+{% end %}
