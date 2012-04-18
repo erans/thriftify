@@ -17,7 +17,9 @@ from ziputil import create_zip
 
 
 class BaseHandler(tornado.web.RequestHandler):
-	pass
+	def render(self, template_name, **kwargs):
+		kwargs["settings"] = settings
+		return super(BaseHandler, self).render(template_name, **kwargs)
 
 
 class RootHandler(BaseHandler):
