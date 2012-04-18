@@ -14,7 +14,16 @@ https://twitter.com/rantav/status/189643309172539392
 
 Installation
 ------------
-
-Copy prod_settings.py to settings.py (or symlink, YMMV).    
-Run ./thriftiy.py
+- Install tornado (sudo easy_install tornado, or see http://www.tornadoweb.org/)
+- Install thrift. YMMV but here's a simple recepie for osx using brew:
+  - brew update
+  - brew install boost
+  - brew install libevent
+  - Download thrift from http://thrift.apache.org/download/ and unzip
+  - cd thrift-x.x.x
+  - ./configure --prefix=/usr/local/ --with-boost=/usr/local/Cellar/boost --with-libevent=/usr/local/Cellar/libevent --disable-static
+  - make install
+  - validate and run thrift from: /usr/local/bin/thrift
+- Copy prod_settings.py to settings.py (or symlink, YMMV).
+- Run src/thriftiy.py
 
