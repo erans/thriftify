@@ -1,5 +1,5 @@
-DEBUG=True
+DEBUG=False
 
 THRIFT_BIN="/usr/local/bin/thrift"
 
-TEMP_PATH="/tmp/"
+TEMP_PATH="/tmp/thriftify"
