@@ -48,7 +48,7 @@
 	};
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
-	Brush.aliases	= ['java'];
+	Brush.aliases	= ['java', 'javame'];
 
 	SyntaxHighlighter.brushes.Java = Brush;
 

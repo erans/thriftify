@@ -22,6 +22,8 @@ $JS_COMPILE --js src/static/js/sh/shCore.js\
           --js src/static/js/sh/shBrushGroovy.js\
           --js src/static/js/sh/shBrushJScript.js\
           --js src/static/js/sh/shBrushPython.js\
+          --js src/static/js/sh/shBrushObjectiveC.js\
+          --js src/static/js/sh/shBrushXml.js\
           --js_output_file src/static/js/sh/sh-all.js\
           --compilation_level WHITESPACE_ONLY
 ls -alh src/static/js/sh/sh-all.js

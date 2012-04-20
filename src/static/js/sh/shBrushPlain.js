@@ -24,7 +24,7 @@
 	};
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
-	Brush.aliases	= ['text', 'plain'];
+	Brush.aliases	= ['text', 'plain', 'go', 'd', 'hs', 'ocamel', 'st'];
 
 	SyntaxHighlighter.brushes.Plain = Brush;
 
