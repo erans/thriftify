@@ -31,12 +31,39 @@ class GenerateThriftBindingHandler(BaseHandler):
 	def _generate_temp_id(self):
 		return str(uuid.uuid4()).replace("-", "")
 
-	def _pack_result(self, path, filename, language):
+	def _pack_zip_result(self, path, filename, language):
 		package_filename = DEFAULT_PACKAGE_NAME_TEMPLATE % (filename, language.replace(":", "_"))
 		p = os.path.join(path, package_filename)
 		logging.debug("Packing to " + p)
 		create_zip(path, "", p, excludelist={ package_filename : None })
 		return package_filename
+
+	def _pack_json_result(self, path, filename, language):
+		"Returns a json string with the list of all files and their content"
+		files = []
+		for file_name in self._collect_files_from_subtree(path): 
+			file = {
+				'name': os.path.basename(file_name),
+				'content': open(file_name, 'r').read()
+			}
+			files.append(file)
+
+		data = {
+			'language': language,
+			'files': files
+		}
+		return json.dumps(data)
+
+	def _collect_files_from_subtree(self, path):
+		"Collects all the file paths (files only, not dirs) under the given tree path"
+		files = []
+		for file in os.listdir(path):
+			full_path = os.path.join(path, file)
+			if os.path.isdir(full_path):
+				files += (self._collect_files_from_subtree(full_path))
+			else:
+				files.append(full_path)
+		return files
 
 	def _generate_bindings(self, path, filename, **kwargs):
 		cmd = [
@@ -90,7 +117,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 				f.close()
 
 			self._generate_bindings(path, filename, gen=language)
-			package_filename = self._pack_result(path, filename, language)
+			package_filename = self._pack_zip_result(path, filename, language)
 
 			self.set_header("Content-Type", "application/octet-stream")
 			self.set_header("Content-Disposition","attachment; filename=%s" % package_filename)
@@ -114,6 +141,8 @@ class GenerateThriftBindingHandler(BaseHandler):
 	@tornado.web.asynchronous
 	def post(self):
 		gen = self.get_argument("gen")
+		download_zip = self.get_argument("download_zip", "off")
+		do_zip = download_zip != "off"
 
 		first_filename = None
 
@@ -150,15 +179,20 @@ class GenerateThriftBindingHandler(BaseHandler):
 					f.close()
 
 			self._generate_bindings(path, first_filename, gen=gen)
-			package_filename = self._pack_result(path, first_filename, gen)
 
-			self.set_header("Content-Type", "application/octet-stream")
-			self.set_header("Content-Disposition","attachment; filename=%s" % package_filename)
-			f = open(os.path.join(path, package_filename), "rb")
-			try:
-				self.write(f.read())
-			finally:
-				f.close()
+			if do_zip:
+				package_filename = self._pack_zip_result(path, first_filename, gen)
+				self.set_header("Content-Type", "application/octet-stream")
+				self.set_header("Content-Disposition","attachment; filename=%s" % package_filename)
+				f = open(os.path.join(path, package_filename), "rb")
+				try:
+					self.write(f.read())
+				finally:
+					f.close()
+			else:
+				json = self._pack_json_result(path, first_filename, gen)
+				self.set_header("Content-Type", "application/json")
+				self.write(json)
 
 			self.finish()
 		finally:
