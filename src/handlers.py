@@ -32,6 +32,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 		return str(uuid.uuid4()).replace("-", "")
 
 	def _pack_zip_result(self, path, filename, language):
+		"Returns a path to a zip file which contains all the output files (and the input thrift file)"
 		package_filename = DEFAULT_PACKAGE_NAME_TEMPLATE % (filename, language.replace(":", "_"))
 		p = os.path.join(path, package_filename)
 		logging.debug("Packing to " + p)

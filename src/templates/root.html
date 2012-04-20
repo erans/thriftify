@@ -10,11 +10,11 @@
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="1">
-				<div class="span8">
+				<div class="span5">
 						<form id="submit-text-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
 								<input type="hidden" name="ui" value="1" />
 								<fieldset>
-									<legend>&nbsp;</legend>
+									<legend>Compile Thrift</legend>
 									<em>
 										<div class="clearfix">
 											<label>Binding Type</label>
@@ -26,17 +26,32 @@
 										<div class="clearfix">
 											<label>Thrift file content</label>
 											<div class="input">
-												<textarea style="width: 400px; height: 200px;" id="thriftcontent" name="thriftcontent"></textarea>
+												<textarea style="width: 400px; height: 200px;" id="thriftcontent" name="thriftcontent">
+struct UserProfile {
+        1: i32 uid,
+        2: string name,
+        3: string blurb
+}
+service UserStorage {
+        void store(1: UserProfile user),
+        UserProfile retrieve(1: i32 uid)
+}</textarea>
 											</div>
 										</div>
-
 										<div class="clearfix">
 											<button class="btn primary">Generate</button>
+											<label class="checkbox">
+												<input type="checkbox" name="download_zip" id="download_zip" checked="checked" />
+												Download Zip
+											</label>
 										</div>
 									</em>				
 								</fieldset>
 							</form>
-					</div>				
+					</div>
+					<div class="span6" id="result_files">
+
+					</div>
 			</div>
 			<div class="tab-pane" id="2">
 				<div class="span8">
