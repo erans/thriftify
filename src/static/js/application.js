@@ -40,7 +40,7 @@ function syntax_highlight_path() {
   var args = arguments, result = [];
        
   for(var i = 0; i < args.length; i++) {
-    result.push(args[i].replace('@', '/static/js/'));
+    result.push(args[i].replace('@', '/static/js/sh/'));
   }
   return result
 };
