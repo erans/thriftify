@@ -42,15 +42,16 @@ class GenerateThriftBindingHandler(BaseHandler):
 	def _pack_json_result(self, path, filename, language):
 		"Returns a json string with the list of all files and their content"
 		files = []
-		for file_name in self._collect_files_from_subtree(path): 
+		for file_name in self._collect_files_from_subtree(path):
+			file_language = 'thrift' if file_name.endswith('.thrift') else language
 			file = {
 				'name': file_name[len(path) + 1:],
-				'content': open(file_name, 'r').read()
+				'content': open(file_name, 'r').read(),
+				'language': file_language,
 			}
 			files.append(file)
 
 		data = {
-			'language': language,
 			'files': files
 		}
 		return json.dumps(data)

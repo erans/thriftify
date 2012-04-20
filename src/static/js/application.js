@@ -26,7 +26,7 @@ function render_files(data) {
     html.push(file.name);
     html.push('</h2>');
     html.push("<pre class='brush: ");
-    html.push(data.language);
+    html.push(file.language);
     html.push("'>");
     html.push(file.content);
     html.push("</pre>");
