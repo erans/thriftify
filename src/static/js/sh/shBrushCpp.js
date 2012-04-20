@@ -88,7 +88,7 @@
 	};
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
-	Brush.aliases	= ['cpp', 'c'];
+	Brush.aliases	= ['cpp', 'c', 'c_glib'];
 
 	SyntaxHighlighter.brushes.Cpp = Brush;
 
