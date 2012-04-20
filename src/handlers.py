@@ -44,7 +44,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 		files = []
 		for file_name in self._collect_files_from_subtree(path): 
 			file = {
-				'name': os.path.basename(file_name),
+				'name': file_name[len(path) + 1:],
 				'content': open(file_name, 'r').read()
 			}
 			files.append(file)
