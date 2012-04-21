@@ -4,6 +4,7 @@ $(document).ready(function() {
     if (do_zip) {
       return true;
     } else {
+      show_progress();
       $.post(e.target.action, $(e.target).serialize(), function(data) {
         render_files(data);
       });
@@ -12,11 +13,18 @@ $(document).ready(function() {
   });
 });
 
+function show_progress() {
+  var html = [];
+  html.push("I'm a poor Amazon Micro instance and thrift is so hard! Please wait a sec and leme finish...");
+  html.push('<div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div>');
+  $('#result_files').html(html.join(''));
+}
+
 //
 // Renders the files from the json data object on the page
 //
 function render_files(data) {
-  html = [];
+  var html = [];
   for (var i = 0; i < data.files.length; ++i) {
     var file = data.files[i];
     if (file.name == "file.thrift") {
