@@ -5,13 +5,27 @@ $(document).ready(function() {
       return true;
     } else {
       show_progress();
-      $.post(e.target.action, $(e.target).serialize(), function(data) {
+      $.post(e.target.action, $(e.target).serialize())
+      .success(function(data) {
         render_files(data);
+      })
+      .error(function(data) {
+        handle_error(data);
       });
       return false;
     }
   });
 });
+
+function handle_error(data) {
+  var result = $.parseJSON(data.responseText);
+  var html = [];
+  html.push('<div class="alert alert-error">');
+  html.push('<h4 class="alert-heading">ouch</h4>');
+  html.push(result.text);
+  html.push('</div>');
+  $('#result_files').html(html.join(''));
+}
 
 function show_progress() {
   var html = [];

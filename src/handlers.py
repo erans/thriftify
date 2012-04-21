@@ -134,8 +134,14 @@ class GenerateThriftBindingHandler(BaseHandler):
 
 		self.finish()
 
+	def _do_zip(self):
+		"Tests whether this request should zip the response"
+		download_zip = self.get_argument("download_zip", "off")
+		do_zip = download_zip != "off"
+		return do_zip
+
 	def write_error(self, status_code, **kwargs):
-		if self.get_argument("ui", "0") == "1":
+		if self.get_argument("ui", "0") == "1" and self._do_zip():
 			self.render("error.html", status_code=status_code, error_text=str(kwargs["exc_info"][1]))
 		else:
 			self.finish({ "result" : "fail", "text" : str(kwargs["exc_info"][1]) })
@@ -143,8 +149,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 	@tornado.web.asynchronous
 	def post(self):
 		gen = self.get_argument("gen")
-		download_zip = self.get_argument("download_zip", "off")
-		do_zip = download_zip != "off"
+		do_zip = self._do_zip()
 
 		first_filename = None
 
