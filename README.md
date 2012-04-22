@@ -5,12 +5,12 @@ Thrift compiler as a service.
 Help you avoid compiling the whole thrift package just to get thrift bindings for a thrift IDL file.    
 
 
-Written by Eran Sandler (@erans)    
+Written by Eran Sandler ([@erans](https:/twitter.com/erans))    
 http://eran.sandler.co.il    
-http://forecastcloudy.net (@forecastcloudy)    
+http://forecastcloudy.net (@forecastcloudy)
 
-Inspired by a set of tweet by @scode and @rantav    
-https://twitter.com/rantav/status/189643309172539392    
+Inspired by a set of tweets by [@scode](https://twitter.com/scode) and [@rantav](https://twitter.com/rantav)    
+https://twitter.com/rantav/status/189643309172539392
 
 Installation
 ------------
