@@ -12,10 +12,14 @@ http://forecastcloudy.net ([@forecastcloudy](https://twitter.com/forecastcloudy)
 Inspired by a set of tweets by [@scode](https://twitter.com/scode) and [@rantav](https://twitter.com/rantav)    
 https://twitter.com/rantav/status/189643309172539392
 
+Contributors
+------------
+- Ran Tavory ([@rantav](https://twitter.com/rantav))
+
 Installation
 ------------
 - Install tornado (sudo pip install tornado, or see http://www.tornadoweb.org/)
-- Install thrift. YMMV but here's a simple recepie for OS X using brew:
+- Install thrift (http://thrift.apache.org/docs/install/). YMMV but here's a simple recepie for OS X using brew:
   - brew update
   - brew install boost
   - brew install libevent
