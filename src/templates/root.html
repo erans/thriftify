@@ -1,6 +1,15 @@
 {% extends "b.html" %}
 
 {% block content %}
+<p>Thriftify is a <a href="http://thrift.apache.org">Thrift</a> bindings generation service that helps you avoid the need to compile and use the Thrift compiler.</p>
+<p>Bindings can be generated using:</p>
+<ul>
+	<li>Pasting a Thrift IDL file</li>
+	<li>Uploading one (or more) Thrift IDL file(s)</li>
+	<li>Providing a URL for your Thrift IDL file</li>
+</ul>
+<p>In addition to that, you can use a simple cURL command to post your Thrift file and get back a zip file containing the bindings you have reuqested. You can read more about it in the <a href="/documentation">Documentation</a> section.</p>
+<hr/>
 <div class="row">
 	<div class="span12">
 		<ul class="nav nav-tabs">

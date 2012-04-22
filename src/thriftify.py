@@ -16,6 +16,7 @@ class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/", RootHandler),
+			(r"/about", AboutHandler),
 			(r"/api/v1/generate", GenerateThriftBindingHandler),
 		]
 		

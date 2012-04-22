@@ -135,8 +135,13 @@ class GenerateThriftBindingHandler(BaseHandler):
 
 	def _do_zip(self):
 		"Tests whether this request should zip the response"
-		download_zip = self.get_argument("download_zip", "off")
+		download_zip = self.get_argument("download_zip", "on")
 		do_zip = download_zip != "off"
+
+		# For AJAX requests, always disable downloading zip.
+		if do_zip and "X-Requested-With" in self.request.headers:
+			do_zip = False
+
 		return do_zip
 
 	def _is_valid_gen_value(self, value):
@@ -223,3 +228,6 @@ class GenerateThriftBindingHandler(BaseHandler):
 			shutil.rmtree(path)
 
 
+class AboutHandler(BaseHandler):
+	def get(self):
+		self.render("about.html")

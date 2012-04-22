@@ -1,4 +1,4 @@
-DEBUG=False
+DEBUG=True
 
 THRIFT_BIN="/usr/local/bin/thrift"
 
