@@ -96,7 +96,6 @@ class GenerateThriftBindingHandler(BaseHandler):
 		if not found_bindings:
 			raise Exception(result)
 				
-
 	def _handle_request(self, response):
 		if response.error:
 			self.set_status(500)
@@ -140,6 +139,18 @@ class GenerateThriftBindingHandler(BaseHandler):
 		do_zip = download_zip != "off"
 		return do_zip
 
+	def _is_valid_gen_value(self, value):
+		if value and value != "":
+			parts = value.split(":")
+			if parts[0] in SUPPORTED_LANGUAGES:
+				if len(parts) > 1:
+					if parts[1] in SUPPORTED_LANGUAGES[parts[0]]["parameters"]:
+						return True
+				else:
+					return True
+
+		return False
+
 	def write_error(self, status_code, **kwargs):
 		if self.get_argument("ui", "0") == "1" and self._do_zip():
 			self.render("error.html", status_code=status_code, error_text=str(kwargs["exc_info"][1]))
@@ -149,6 +160,11 @@ class GenerateThriftBindingHandler(BaseHandler):
 	@tornado.web.asynchronous
 	def post(self):
 		gen = self.get_argument("gen")
+		if gen: gen = gen.lower()
+
+		if not self._is_valid_gen_value(gen):
+			raise tornado.web.HTTPError(400, "Invalid 'gen' value. Please refer to the documentation at http://thriftify.org/documentation")
+
 		do_zip = self._do_zip()
 
 		first_filename = None

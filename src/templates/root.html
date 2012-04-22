@@ -11,7 +11,7 @@
 		<div class="tab-content">
 			<div class="tab-pane active" id="1">
 				<div class="span5">
-						<form id="submit-text-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+						<form id="submit-text-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data" novalidate="novalidate">
 								<input type="hidden" name="ui" value="1" />
 								<fieldset>
 									<legend>Compile Thrift</legend>
@@ -54,8 +54,9 @@ service UserStorage {
 			<div class="tab-pane" id="2">
 				<div class="span8">
 					<div>
-						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data" novalidate="novalidate">
 							<input type="hidden" name="ui" value="1" />
+							<input type="hidden" name="download_zip" id="download_zip" checked="on" />
 							<fieldset>
 								<legend>&nbsp;</legend>
 								<em>
@@ -88,7 +89,7 @@ service UserStorage {
 			<div class="tab-pane" id="3">
 				<div class="span8">
 					<div>
-						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data">
+						<form id="submit-files-url" method="POST" action="/api/v1/generate" enctype="multipart/form-data" novalidate="novalidate">
 							<input type="hidden" name="ui" value="1" />
 							<fieldset>
 								<legend>&nbsp;</legend>
@@ -103,7 +104,7 @@ service UserStorage {
 									<div class="clearfix">
 										<label>Thrift File URL</label>
 										<div class="input">
-											<input type="text" class="xlarge" placeholder="Enter the thrift file URL" name="url" id="url" />
+											<input type="text" class="xlarge" placeholder="Enter the thrift file URL" name="url" id="url" class="required" />
 										</div>
 									</div>
 
@@ -123,18 +124,36 @@ service UserStorage {
 
 {% block scriptinit %}
 
-//jQuery("button.primary").each( function(k, v) {
-//	$("form").validate({
-//		debug: true
-//	});	
-//})
+$("#submit-text-form").validate({
+	rules: {
+		gen: "required",
+		thriftcontent: "required",
+	},
+	messages: {
+		gen: "Hmpf... You forgot to select a Thrift binding",
+		thriftcontent: "Hmm... I think you are missing the Thrift IDL"
+	}
+});
 
+$("#submit-files-form").validate({
+	rules: {
+		gen: "required"
+	},
+	messages: {
+		gen: "Hmpf... You forgot to select a Thrift binding"	
+	}
+});
 
-$('a[data-toggle="tab"]').on('shown', function (e) {
-  //e.target // activated tab
-  //e.relatedTarget // previous tab
-  //alert("hello");
-})
+$("#submit-files-url").validate({
+	rules: {
+		gen: "required",
+		url: "required"
+	},
+	messages: {
+		gen: "Hmpf... You forgot to select a Thrift binding",
+		url: "Where should I get the Thrift file from?"
+	}
+});
 
 $("#add-more-link").click( function(e) {
 	e.preventDefault();

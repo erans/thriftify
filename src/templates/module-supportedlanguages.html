@@ -1,4 +1,5 @@
-<select id="gen" name="gen">		
+<label for="gen"></label>
+<select id="gen" name="gen" class="required">		
 	<option value="" class="required">Select a binding</option>
 	{% for s in sorted(supported_languages.iterkeys()) %}
 	{% if "parameters" in supported_languages[s] %}
