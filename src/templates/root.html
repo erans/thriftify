@@ -78,6 +78,13 @@ service UserStorage {
 								<legend>&nbsp;</legend>
 								<em>
 									<div class="clearfix">
+										<label>Thrift Compiler Version</label>
+										<div class="input">
+											{% module Template("module-thriftbinaries.html", thrift_bins=thrift_bins) %}
+										</div>
+									</div>
+
+									<div class="clearfix">
 										<label>Binding Type</label>
 										<div class="input">
 											{% module Template("module-supportedlanguages.html", supported_languages=supported_languages) %}
@@ -111,6 +118,13 @@ service UserStorage {
 							<fieldset>
 								<legend>&nbsp;</legend>
 								<em>
+									<div class="clearfix">
+										<label>Thrift Compiler Version</label>
+										<div class="input">
+											{% module Template("module-thriftbinaries.html", thrift_bins=thrift_bins) %}
+										</div>
+									</div>
+
 									<div class="clearfix">
 										<label>Binding Type</label>
 										<div class="input">
@@ -165,10 +179,12 @@ $("button.btn").click( function(e) {
 
 $("#submit-text-form").validate({
 	rules: {
+		thriftversion : "required",
 		gen: "required",
 		thriftcontent: "required",
 	},
 	messages: {
+		thriftversion: "Please select a thrift version",
 		gen: "Hmpf... You forgot to select a Thrift binding",
 		thriftcontent: "Hmm... I think you are missing the Thrift IDL"
 	}
@@ -176,19 +192,23 @@ $("#submit-text-form").validate({
 
 $("#submit-files-form").validate({
 	rules: {
+		thriftversion : "required",
 		gen: "required"
 	},
 	messages: {
+		thriftversion: "Please select a thrift version",
 		gen: "Hmpf... You forgot to select a Thrift binding"	
 	}
 });
 
 $("#submit-files-url").validate({
 	rules: {
+		thriftversion : "required",
 		gen: "required",
 		url: "required"
 	},
 	messages: {
+		thriftversion: "Please select a thrift version",
 		gen: "Hmpf... You forgot to select a Thrift binding",
 		url: "Where should I get the Thrift file from?"
 	}
