@@ -45,23 +45,28 @@
           If missing then you have to provide a file upload (use <code>curl "http://thriftify.org/api/v1/generate?gen=java" <strong>-F</strong> "<strong>file1=@file.thrift</strong>" > java.zip</code>) 
         </td>
       </tr>
+      <tr>
+        <td><code>&amp;gen</code></td>
+        <td>Output bindings language</td>
+        <td>See examples and possible valuesbelow</td>
+      </tr>
       {% for s in sorted(supported_languages.iterkeys()) %}
       {% if "parameters" in supported_languages[s] %}
         <tr>
-          <td><code>&amp;gen</code></td>
+          <td></td>
           <td><code>{{ s }}</code></td>
           <td>{{ supported_languages[s]['name'] }}</td>
         </tr>
         {% for p in supported_languages[s]['parameters'] %}
           <tr>
-            <td><code>&amp;gen</code></td>
+            <td></td>
             <td><code>{{ s }}:{{ p }}</code></td>
             <td>{{ supported_languages[s]['name'] }}: {{ supported_languages[s]['parameters'][p] }}</td>
           </tr>
         {% end %}
       {% else %}
         <tr>
-          <td><code>&amp;gen</code></td>
+          <td></td>
           <td><code>{{ s }}</code></td>
           <td>{{ supported_languages[s]["name"] }}</td>
         </tr>
