@@ -10,10 +10,12 @@ import cStringIO
 
 import tornado
 from tornado import httpclient
+from tornado.options import define, options
 
 import settings
 from consts import *
 from ziputil import create_zip
+import mixpanel
 
 class BaseHandler(tornado.web.RequestHandler):
 	has_mixpanel = None
@@ -227,6 +229,9 @@ class GenerateThriftBindingHandler(BaseHandler):
 					self.write(f.read())
 				finally:
 					f.close()
+
+				if options.mixpaneltoken:
+					mixpanel.track(options.mixpaneltoken, "GenerateAPI", { "gen" : gen })
 			else:
 				json = self._pack_json_result(path, first_filename, gen)
 				self.set_header("Content-Type", "application/json")

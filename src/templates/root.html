@@ -133,6 +133,28 @@ service UserStorage {
 
 {% block scriptinit %}
 
+window._current_tab = "#1";
+
+$('a[data-toggle="tab"]').on('shown', function (e) {
+	window._current_tab = e.target.hash;
+});
+
+$("button.btn").click( function(e) {
+	if (typeof(mixpanel) != 'undefined') {
+		var data = {
+			"gen" : $("#gen").val(),
+			"origin" : "web",
+			"tab" : window._current_tab
+		}
+
+		if (window._current_tab == "#1") {
+			data["download_zip"] = $("#download_zip").val() == "on";
+		}
+
+		mixpanel.track("Click_Generate", data);
+	}
+});
+
 $("#submit-text-form").validate({
 	rules: {
 		gen: "required",

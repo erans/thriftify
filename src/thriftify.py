@@ -11,6 +11,7 @@ from handlers import *
 import settings
 
 define("port", default=8888, help="run on the given port", type=int)
+define("mixpaneltoken", default=None, help="MixPanel token to track events", type=str)
 
 class Application(tornado.web.Application):
 	def __init__(self):
@@ -25,7 +26,8 @@ class Application(tornado.web.Application):
 			template_path=os.path.join(os.path.dirname(__file__), "templates"),
 			static_path=os.path.join(os.path.dirname(__file__), "static"),
 			debug=settings.DEBUG,
-			gzip=True
+			gzip=True,
+			mixpanel_token=options.mixpaneltoken
 		)
 		tornado.web.Application.__init__(self, handlers, **_settings)
 
