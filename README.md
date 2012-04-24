@@ -19,6 +19,7 @@ Contributors
 Installation
 ------------
 - Install tornado (sudo pip install tornado, or see http://www.tornadoweb.org/)
+- Install simplejson (sudo easy_install simplejson, or pip install)
 - Install thrift (http://thrift.apache.org/docs/install/). YMMV but here's a simple recepie for OS X using brew:
   - brew update
   - brew install boost
