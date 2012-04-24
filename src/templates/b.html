@@ -6,6 +6,7 @@
 		<link href="{{ static_url('css/main.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/shCore.css') }}" rel="stylesheet">
 		<link href="{{ static_url('css/shThemeDefault.css') }}" rel="stylesheet">
+		{% if has_mixpanel %}{% module Template("mixpanel.html") %}{% end %}
 	</head>
 	<body>
 		<div class="navbar">

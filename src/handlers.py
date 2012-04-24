@@ -15,9 +15,19 @@ import settings
 from consts import *
 from ziputil import create_zip
 
-
 class BaseHandler(tornado.web.RequestHandler):
+	has_mixpanel = None
+
 	def render(self, template_name, **kwargs):
+		if self.has_mixpanel is None:
+			if settings.ENABLE_ANALYTICS:
+				try:
+					mixpanel_data = self.render_string("mixpanel.html")
+					self.has_mixpanel = True
+				except IOError:
+					self.has_mixpanel = False
+		
+		kwargs["has_mixpanel"] = self.has_mixpanel
 		kwargs["settings"] = settings
 		return super(BaseHandler, self).render(template_name, **kwargs)
 
