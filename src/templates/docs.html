@@ -24,6 +24,27 @@
         <th>value</th>
         <th>comments</th>
       </tr>
+      <tr>
+        <td><code>&amp;url</code></td>
+        <td>url to download the thrift file from</td>
+        <td>Optional. If not provided then the thrift file must be posted with the request</td>
+      </tr>
+      <tr>
+        <td><code>&amp;download_zip</code></td>
+        <td>
+          <code>off</code> to get a json<br/>
+          Exclude or set to <code>on</code> to get a zip
+        </td>
+        <td>Optional. equals to <code>off</code> then a json response with the files is returned. If missing or set to anything else then a zip file is returned</td>
+      </tr>
+      <tr>
+        <td><code>&amp;thriftcontent</code></td>
+        <td>thrift code.</td>
+        <td>Optional. This is the thrift code to compile.<br/>
+          Example: <code>curl "http://thriftify.org/api/v1/generate?gen=java" <strong>-d</strong> "<strong>thriftcontent=struct A{}</strong>" > java.zip</code><br/>
+          If missing then you have to provide a file upload (use <code>curl "http://thriftify.org/api/v1/generate?gen=java" <strong>-F</strong> "<strong>file1=@file.thrift</strong>" > java.zip</code>) 
+        </td>
+      </tr>
       {% for s in sorted(supported_languages.iterkeys()) %}
       {% if "parameters" in supported_languages[s] %}
         <tr>
