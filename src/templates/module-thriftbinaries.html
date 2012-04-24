@@ -1,0 +1,7 @@
+<label for="thriftversion"></label>
+<select id="thriftversion" name="thriftversion" class="required">		
+	<option value="" class="required">Select Thrift Version</option>
+	{% for i in range(0, len(thrift_bins)) %}
+	<option value="{{ thrift_bins[i]['name'] }}" {% if i == 0 %}selected{% end %}>{{ thrift_bins[i]['name'] }}</option>
+	{% end %}								
+</select>

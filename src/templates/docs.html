@@ -25,6 +25,19 @@
         <th>comments</th>
       </tr>
       <tr>
+        <td><code>&amp;thriftversion</code></td>
+        <td>Generate a binding based on specific Thrift compiler version</td>
+        <td>Optional. If not provided it will use version <code>{{ default_thrift_version }}</code></td>
+      </tr>
+      {% for t in thrift_bins %}
+      <tr>
+        <td></td>
+        <td><code>{{ t["name"] }}</code></td>
+        <td></td>
+      </tr>
+      {% end %}
+      <tr>
+      <tr>
         <td><code>&amp;url</code></td>
         <td>url to download the thrift file from</td>
         <td>Optional. If not provided then the thrift file must be posted with the request</td>

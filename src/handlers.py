@@ -20,6 +20,10 @@ import mixpanel
 class BaseHandler(tornado.web.RequestHandler):
 	has_mixpanel = None
 
+	def _get_default_thrift_version(self):
+		for t in self.application.thrift_bins:
+			return t["name"]
+
 	def render(self, template_name, **kwargs):
 		if self.has_mixpanel is None:
 			if settings.ENABLE_ANALYTICS:
@@ -30,6 +34,7 @@ class BaseHandler(tornado.web.RequestHandler):
 					self.has_mixpanel = False
 		
 		kwargs["has_mixpanel"] = self.has_mixpanel
+		kwargs["thrift_bins"] = self.application.thrift_bins
 		kwargs["settings"] = settings
 		return super(BaseHandler, self).render(template_name, **kwargs)
 
@@ -40,6 +45,16 @@ class RootHandler(BaseHandler):
 
 
 class GenerateThriftBindingHandler(BaseHandler):
+	def _get_thrift_bin_by_version(self, version):
+		for t in self.application.thrift_bins:
+			if not version:
+				return t["bin"]
+			else:
+				if t["name"] == version:
+					return t["bin"]
+
+		return None
+
 	def _generate_temp_id(self):
 		return str(uuid.uuid4()).replace("-", "")
 
@@ -79,9 +94,9 @@ class GenerateThriftBindingHandler(BaseHandler):
 				files.append(full_path)
 		return files
 
-	def _generate_bindings(self, path, filename, **kwargs):
+	def _generate_bindings(self, thrift_bin, path, filename, **kwargs):
 		cmd = [
-			settings.THRIFT_BIN,
+			thrift_bin,
 			"-o %s" % path,
 			"--gen %s" % kwargs["gen"],
 			os.path.join(path, filename)
@@ -113,6 +128,8 @@ class GenerateThriftBindingHandler(BaseHandler):
 			self.set_status(500)
 			self.finish(json.dumps({ "result" : 500, "text" : "failed to retrieve file. Reasone: %s" % reponse.error }))
 
+		thrift_bin = self._get_thrift_bin_by_version(self.get_argument("thriftversion", None))	
+		
 		language = self.get_argument("gen")
 
 		parsed_url = urlparse(response.request.url)
@@ -129,7 +146,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 			finally:
 				f.close()
 
-			self._generate_bindings(path, filename, gen=language)
+			self._generate_bindings(thrift_bin, path, filename, gen=language)
 			package_filename = self._pack_zip_result(path, filename, language)
 
 			self.set_header("Content-Type", "application/octet-stream")
@@ -184,6 +201,9 @@ class GenerateThriftBindingHandler(BaseHandler):
 
 		do_zip = self._do_zip()
 
+		thrift_bin = self._get_thrift_bin_by_version(self.get_argument("thriftversion", None))	
+		
+
 		first_filename = None
 
 		url = self.get_argument("url", None)
@@ -218,7 +238,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 				finally:
 					f.close()
 
-			self._generate_bindings(path, first_filename, gen=gen)
+			self._generate_bindings(thrift_bin, path, first_filename, gen=gen)
 
 			if do_zip:
 				package_filename = self._pack_zip_result(path, first_filename, gen)
@@ -249,4 +269,4 @@ class AboutHandler(BaseHandler):
 
 class DocsHandler(BaseHandler):
 	def get(self):
-		self.render("docs.html", supported_languages=SUPPORTED_LANGUAGES)
+		self.render("docs.html", supported_languages=SUPPORTED_LANGUAGES, default_thrift_version=self._get_default_thrift_version())

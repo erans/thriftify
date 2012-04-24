@@ -26,6 +26,13 @@
 									<legend>Compile Thrift</legend>
 									<em>
 										<div class="clearfix">
+											<label>Thrift Compiler Version</label>
+											<div class="input">
+												{% module Template("module-thriftbinaries.html", thrift_bins=thrift_bins) %}
+											</div>
+										</div>
+
+										<div class="clearfix">
 											<label>Binding Type</label>
 											<div class="input">
 												{% module Template("module-supportedlanguages.html", supported_languages=supported_languages) %}

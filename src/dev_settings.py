@@ -1,6 +1,9 @@
 DEBUG=True
 
-THRIFT_BIN="/usr/local/bin/thrift"
+THRIFT_BINS = [
+	"/usr/local/bin/thrift",
+	"/var/thrift-0.8.0/thrift"	
+]
 
 TEMP_PATH="/tmp/thriftify"
 
