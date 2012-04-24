@@ -50,8 +50,8 @@ service UserStorage {
 										<div class="clearfix">
 											<button class="btn primary">Generate</button>
 											<label class="checkbox">
-												<input type="checkbox" name="download_zip" id="download_zip" checked="checked" />
-												Download Zip
+												<input type="checkbox" name="download_zip" id="download_zip" />
+												Download Zip (check this if you want to download the output)
 											</label>
 										</div>
 									</em>				
@@ -63,6 +63,7 @@ service UserStorage {
 			<div class="tab-pane" id="2">
 				<div class="span8">
 					<div>
+						<p>The first file uploaded will be the one the Thrift compiler executes on. <br/>If you reference other Thrift files in it, add them as additional files</p>
 						<form id="submit-files-form" method="POST" action="/api/v1/generate" enctype="multipart/form-data" novalidate="novalidate">
 							<input type="hidden" name="ui" value="1" />
 							<input type="hidden" name="download_zip" id="download_zip" checked="on" />
