@@ -17,6 +17,7 @@ class Application(tornado.web.Application):
 		handlers = [
 			(r"/", RootHandler),
 			(r"/about", AboutHandler),
+			(r"/docs", DocsHandler),
 			(r"/api/v1/generate", GenerateThriftBindingHandler),
 		]
 		

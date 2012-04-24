@@ -241,3 +241,7 @@ class GenerateThriftBindingHandler(BaseHandler):
 class AboutHandler(BaseHandler):
 	def get(self):
 		self.render("about.html")
+
+class DocsHandler(BaseHandler):
+	def get(self):
+		self.render("docs.html")
