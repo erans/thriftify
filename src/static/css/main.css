@@ -1,3 +1,18 @@
 label.error {
 	color: red;
 }
+
+.credits a {
+	color: #c0c0c0;
+}
+
+.credits {
+	font-size: 0.9em;
+	list-type: none;
+	color: #c0c0c0;
+}
+
+.credits li {
+	display: inline;
+	margin-right: 20px;
+}
