@@ -249,4 +249,4 @@ class AboutHandler(BaseHandler):
 
 class DocsHandler(BaseHandler):
 	def get(self):
-		self.render("docs.html")
+		self.render("docs.html", supported_languages=SUPPORTED_LANGUAGES)
