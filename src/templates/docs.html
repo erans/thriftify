@@ -5,7 +5,7 @@
   <h2>API</h2>
   <p>A simple one-liner:</p>
   <pre>
-    $ curl "http://thriftify.org/api/v1/generate?gen=java" -F "file1=@file.thrift" > java.zip
+    $ curl "http://thriftify.org/api/v1/generate?gen=java" -d "thriftcontent=struct A{}" > java.zip
   </pre>
   <p>A complete example:</p>
   <pre>
