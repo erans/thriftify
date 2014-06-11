@@ -61,7 +61,7 @@ SUPPORTED_LANGUAGES = {
 			"beans" : "Members will be private, and setter methods will return void.",
 			"private-members" : "Members will be private, but setter methods will return 'this' like usual.",
 			"nocamel" : "Do not use CamelCase field accessors with beans",
-			"hahscode" : "Generate quality hashCode methods.",
+			"hashcode" : "Generate quality hashCode methods.",
 			"android_legacy" : "Do not use java.io.IOException(throwable) (available for Android 2.3 and above).",
 			"java5" : "Generate Java 1.5 compliant code (includes android_legacy flag)."		
 		}
