@@ -178,8 +178,11 @@ class GenerateThriftBindingHandler(BaseHandler):
 			parts = value.split(":")
 			if parts[0] in SUPPORTED_LANGUAGES:
 				if len(parts) > 1:
-					if parts[1] in SUPPORTED_LANGUAGES[parts[0]]["parameters"]:
-						return True
+                                        for param in parts[1].split(','):
+					        if param not in SUPPORTED_LANGUAGES[parts[0]]["parameters"]:
+						        return False
+
+                                        return True
 				else:
 					return True
 
